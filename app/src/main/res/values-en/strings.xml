@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Auto Clicker</string>
+    <string name="label_point_count">Touch points</string>
+    <string name="label_interval">Tap interval (ms)</string>
+    <string name="hint_interval">10~5000</string>
+    <string name="action_open_accessibility_settings">Open accessibility settings</string>
+    <string name="desc_control_overlay">Start or stop auto tap</string>
+    <string name="accessibility_service_description">Shows overlay controls and performs auto taps.</string>
+</resources>

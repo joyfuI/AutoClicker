@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="56dp"
+    android:layout_height="56dp"
+    android:background="@drawable/bg_overlay_circle"
+    android:clickable="true"
+    android:contentDescription="@string/desc_control_overlay"
+    android:focusable="false">
+
+    <ImageView
+        android:id="@+id/image_control_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center"
+        android:contentDescription="@string/desc_control_overlay"
+        android:src="@drawable/ic_play"
+        android:tint="@android:color/white" />
+</FrameLayout>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">오토클리커</string>
+    <string name="label_point_count">터치 지점 개수</string>
+    <string name="label_interval">터치 간격 (ms)</string>
+    <string name="hint_interval">10~5000</string>
+    <string name="action_open_accessibility_settings">접근성 설정으로 이동</string>
+    <string name="desc_control_overlay">자동 탭 시작/중지</string>
+    <string name="accessibility_service_description">오버레이를 표시하고 자동 탭을 실행합니다.</string>
+</resources>
