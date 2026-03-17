@@ -7,6 +7,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.view.isVisible
 import com.joyfui.autoclicker.R
@@ -81,7 +82,7 @@ class OverlayController(
     }
 
     private fun createControlOverlay(settings: AppSettings): OverlayItem {
-        val view = inflater.inflate(R.layout.view_overlay_control, null)
+        val view = inflater.inflate(R.layout.view_overlay_control, FrameLayout(inflater.context), false)
         val initial = settings.controlPosition ?: defaultControlPosition()
         val params = createBaseLayoutParams(initial)
 
@@ -104,7 +105,7 @@ class OverlayController(
     }
 
     private fun createPointOverlay(index: Int, settings: AppSettings): OverlayItem {
-        val view = inflater.inflate(R.layout.view_overlay_point, null)
+        val view = inflater.inflate(R.layout.view_overlay_point, FrameLayout(inflater.context), false)
         val initial = getSavedPointPosition(settings, index) ?: defaultPointPosition(index)
         val params = createBaseLayoutParams(initial)
 
