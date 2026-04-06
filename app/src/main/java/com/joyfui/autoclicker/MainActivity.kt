@@ -3,6 +3,7 @@ package com.joyfui.autoclicker
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -25,9 +26,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
@@ -41,6 +48,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -80,6 +88,10 @@ class MainActivity : ComponentActivity() {
 
     private var statusBarScrim: View? = null
 
+    private companion object {
+        const val PRIVACY_POLICY_URL = "https://joyfui.com/privacy/autoclicker.html"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, true)
@@ -103,7 +115,8 @@ class MainActivity : ComponentActivity() {
                             repository.updateIntervalMs(intervalMs)
                         }
                     },
-                    onOpenAccessibilitySettings = ::openAccessibilitySettings
+                    onOpenAccessibilitySettings = ::openAccessibilitySettings,
+                    onOpenPrivacyPolicy = ::openPrivacyPolicy
                 )
             }
         }
@@ -173,6 +186,10 @@ class MainActivity : ComponentActivity() {
             startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
         }
     }
+
+    private fun openPrivacyPolicy() {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(PRIVACY_POLICY_URL)))
+    }
 }
 
 @Composable
@@ -189,9 +206,11 @@ private fun AutoClickerSettingsScreen(
     settings: AppSettings,
     onPointCountChanged: (Int) -> Unit,
     onIntervalChanged: (Long) -> Unit,
-    onOpenAccessibilitySettings: () -> Unit
+    onOpenAccessibilitySettings: () -> Unit,
+    onOpenPrivacyPolicy: () -> Unit
 ) {
     var intervalText by rememberSaveable { mutableStateOf(settings.intervalMs.toString()) }
+    var menuExpanded by remember { mutableStateOf(false) }
 
     LaunchedEffect(settings.intervalMs) {
         val persistedValue = settings.intervalMs.toString()
@@ -204,9 +223,30 @@ private fun AutoClickerSettingsScreen(
         topBar = {
             TopAppBar(
                 title = { Text(text = stringResource(id = R.string.app_name)) },
+                actions = {
+                    IconButton(onClick = { menuExpanded = true }) {
+                        Icon(
+                            imageVector = Icons.Default.MoreVert,
+                            contentDescription = stringResource(id = R.string.desc_more_options)
+                        )
+                    }
+                    DropdownMenu(
+                        expanded = menuExpanded,
+                        onDismissRequest = { menuExpanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text(text = stringResource(id = R.string.menu_privacy_policy)) },
+                            onClick = {
+                                menuExpanded = false
+                                onOpenPrivacyPolicy()
+                            }
+                        )
+                    }
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                    actionIconContentColor = MaterialTheme.colorScheme.onPrimary
                 )
             )
         },
