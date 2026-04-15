@@ -4,6 +4,8 @@
 
 이 프로젝트는 OpenAI Codex로 만들어졌습니다.
 
+관련 잡담은 [https://blog.joyfui.com/1316](https://blog.joyfui.com/1316)
+
 ## 주요 기능
 
 - 터치 지점 개수 설정 (1~3개)
